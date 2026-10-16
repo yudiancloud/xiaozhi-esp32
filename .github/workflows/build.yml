@@ -18,7 +18,7 @@ jobs:
         uses: espressif/esp-idf-ci-action@v1.1.0
         with:
           # 项目要求需要 ESP-IDF >= 6.0.1；使用 6.1 更稳妥
-          esp_idf_version: release/v6.1
+          esp_idf_version: v6.1
           target: esp32s3
           command: |
             # 在正式构建前打印一下 idf.py 版本，便于排查 CI 环境
