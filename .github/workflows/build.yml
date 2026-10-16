@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-  # 允许在 GitHub 网页上手动点「Run workflow」触发
   workflow_dispatch:
 
 jobs:
@@ -18,12 +17,25 @@ jobs:
       - name: Build with ESP-IDF (esp32s3)
         uses: espressif/esp-idf-ci-action@v1.1.0
         with:
-          esp_idf_version: release-v5.4
+          # 项目要求需要 ESP-IDF >= 6.0.1；使用 6.1 更稳妥
+          esp_idf_version: release/v6.1
           target: esp32s3
           command: |
+            # 在正式构建前打印一下 idf.py 版本，便于排查 CI 环境
+            idf.py --version
             idf.py build
             idf.py merge-bin
             mv build/merged-binary.bin build/bread-compact-wifi-lcd-240x240.bin
+
+      - name: Show IDF_PATH and idf.py (debug)
+        if: always()
+        run: |
+          echo "IDF_PATH=$IDF_PATH"
+          if command -v idf.py >/dev/null 2>&1; then
+            idf.py --version || echo "idf.py exists but --version failed"
+          else
+            echo "idf.py not found in PATH; check esp-idf-ci-action setup"
+          fi
 
       - name: Upload firmware
         uses: actions/upload-artifact@v4
