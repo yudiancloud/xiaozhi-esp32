@@ -76,3 +76,13 @@ CONFIG_LV_USE_WIN=n
 
 CONFIG_LV_BUILD_EXAMPLES=n
 CONFIG_LV_BUILD_DEMOS=n
+
+
+# ===== 自定义编译配置：面包板新版接线(WiFi) + LCD =====
+CONFIG_BOARD_TYPE_BREAD_COMPACT_WIFI_LCD=y
+
+# 屏幕：ST7789，分辨率 240*240
+CONFIG_LCD_ST7789_240X240=y
+
+# 私有化服务端 OTA 地址（群晖全模块版，web 端口 18002）
+CONFIG_OTA_URL="http://192.168.1.111:18002/xiaozhi/ota/"
